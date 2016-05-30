@@ -1,4 +1,6 @@
 <?php
+    // TODO: poderíamos colocar validações HTML 5 simples?
+    //
     session_start();
     require_once('ApiClient.php');
 
@@ -11,6 +13,7 @@
         $_SESSION['sdk_api_environment'] = $_POST['api_environment'];
 
         header('Location: novo-cliente.php');
+        exit;
     }
 ?>
 

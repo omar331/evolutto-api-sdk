@@ -10,6 +10,8 @@
 
     $apiClient = new ApiClient( $apiClientId, $apiSecret, $apiEnvironment );
 
+    // ---> obtem os produtos disponíveis através da API
+    //
     $produtosDisponiveis = $apiClient->produtosDisponiveis();
 
 //    $postData = [
@@ -52,10 +54,57 @@
 ?>
 
 <?php
+    // ---> tenta criar um novo CLIENTE + USUÁRIO + CONTRATOS
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $contratoInicio = new \DateTime();
+
+        $contratoTermino = clone $contratoInicio;
+        $contratoTermino->add( new \DateInterval('P12M') );
+
+        $contratosCriar = [];
+        foreach( $_POST['produtos_contratados'] as $produtoId ) {
+            $contratosCriar[] = [
+                'produto_id' => $produtoId,
+                'contrato_inicio' => $contratoInicio->format('Y-m-d'),
+                'contrato_fim' => $contratoTermino->format('Y-m-d'),
+                'freemium' => false,
+                'ativo_consultoria' => true,
+                'ativo_acesso_conteudo' => true,
+            ];
+        }
 
 
+        //
+        // ---> informações do cliente a ser cadastrado
+        //
+         $clienteCriarInfo = [
+            'empresa' => [
+                'tipo_pessoa' => 'j',
+                'nome_fantasia' => $_POST['nome_fantasia'],
+                'razao_social' => $_POST['razao_social'],
+                'cnpj' => $_POST['cnpj'],
+            ],
+            'usuario' => [
+                'nome' => $_POST['usuario_nome'],
+                'email' => $_POST['usuario_email'],
+                'telefone1' => $_POST['usuario_telefone1'],
+                'telefone2' => $_POST['usuario_telefone2'],
+                'telefone3' => '99 99999999',
+                'senha' => $_POST['usuario_senha'],
+            ],
+            'contratos' => $contratosCriar
+        ];
 
+        $criarResultado = $apiClient->novoCliente( $clienteCriarInfo );
+        $resultInfo = json_decode($criarResultado['result'], true);
+
+
+        echo "<H1>Resultados</H1><br>";
+
+        echo "<pre>";
+        print_r($resultInfo);
+        echo "</pre>";
+        exit;
     }
 ?>
 
@@ -104,7 +153,7 @@
                 Nome Fantasia
             </th>
             <td>
-                <input type="text" name="empresa_nome">
+                <input type="text" name="nome_fantasia">
             </td>
         </tr>
         <tr>
@@ -112,7 +161,15 @@
                 Razão Social
             </th>
             <td>
-                <input type="text" name="empresa_nome">
+                <input type="text" name="razao_social">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                CNPJ
+            </th>
+            <td>
+                <input type="text" name="cnpj">
             </td>
         </tr>
     </table>
@@ -135,6 +192,14 @@
                 <input type="text" name="usuario_email">
                 <br
                 <b>Atenção:</b> o nome de usuário é criado a partir do email
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Senha
+            </th>
+            <td>
+                <input type="text" name="usuario_senha">
             </td>
         </tr>
         <tr>
@@ -163,7 +228,7 @@
                 Selecione
             </th>
             <td>
-                <select name="produtos_contratados" multiple>
+                <select name="produtos_contratados[]" multiple>
                     <?php foreach( $produtosDisponiveis as $produto ): ?>
                         <option value="<?php echo $produto['id']; ?>">
                             <?php echo $produto['nome'] ?>

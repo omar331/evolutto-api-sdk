@@ -106,6 +106,7 @@ class ApiClient {
 
         $result = $this->send($url, 'POST', $data );
 
+        // todo: Melhorar a forma de retornar???
         return $result;
     }
 
