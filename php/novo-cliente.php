@@ -155,7 +155,7 @@
             <td>
                 <input type="text" name="nome_fantasia">
             </td>
-        </tr>
+        </tr>$apiClient->novoCliente( $clienteCriarInfo
         <tr>
             <th>
                 Razão Social
