@@ -1,15 +1,16 @@
 <?php
-    $produtosDisponiveis = [
-        [
-            'id' => 1,
-            'nome' => 'ISO 9001'
-        ],
-        [
-            'id' => 2,
-            'nome' => 'ISO 14001'
-        ],
-    ];
+    session_start();
+    require_once('ApiClient.php');
 
+    // ---> as informaçoes de acesso já devem  estar armazenadas na API
+    $apiClientApelido = $_SESSION['sdk_api_client_apelido'];
+    $apiClientId = $_SESSION['sdk_api_client_id'];
+    $apiSecret = $_SESSION['sdk_api_secret'];
+    $apiEnvironment = $_SESSION['sdk_api_environment'];
+
+    $apiClient = new ApiClient( $apiClientId, $apiSecret, $apiEnvironment );
+
+    $produtosDisponiveis = $apiClient->produtosDisponiveis();
 
 //    $postData = [
 //        'api_secret' => $aplicacaoTeste->getClientSecret(),
@@ -50,27 +51,32 @@
 //    ];
 ?>
 
-
-
-
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        echo "form sendo processado <br><br>";
-        var_dump($_POST);
+
+
+
     }
 ?>
 
 <form method="post">
-    <h3>Acesso a API</h3>
-    <p><b>Obtenha esses dados em seu seu cadastro na plataforma</b></p>
+    <h3>API - Credenciais de Acesso</h3>
 
     <table>
+        <tr>
+            <th>
+                Apelido
+            </th>
+            <td>
+                <?php echo $apiClientApelido ?>
+            </td>
+        </tr>
         <tr>
             <th>
                 API Client
             </th>
             <td>
-                <input type="text" name="api_client">
+                <?php echo $apiClientId ?>
             </td>
         </tr>
         <tr>
@@ -78,7 +84,15 @@
                 API Secret
             </th>
             <td>
-                <input type="text" name="api_secret">
+                <?php echo $apiSecret ?>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Ambiente
+            </th>
+            <td>
+                <?php echo $apiEnvironment ?>
             </td>
         </tr>
     </table>

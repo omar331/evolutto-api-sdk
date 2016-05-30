@@ -32,7 +32,7 @@ class ApiClient {
             throw new \InvalidArgumentException(
                 sprintf("Environment %s doesn't exists. Available ones are %s",
                         $enviroment,
-                        implode("'", array_keys($environments) )
+                        implode(",", array_keys($environments) )
                     )
             );
         }
@@ -49,10 +49,10 @@ class ApiClient {
      * @return string
      */
     public function getBaseUrl() {
-        $environments = $this->getEnvironments();
+        $environments = static::getEnvironments();
         $env = $environments[ $this->enviroment ];
 
-        $url = sprintf("%s%s/api/%s",
+        $url = sprintf("%s%s/api/%s/%s",
                         $env['baseUrl'],
                         $env['script'],
                         $this->apiVersion,
@@ -66,14 +66,25 @@ class ApiClient {
     /**
      * Obtem os produtos disponiveis para a organização
      *
-     * @return string
+     * @return Array|null a lista de produtos disponiveis, caso a chamada tenha sido
+     *                    bem sucedida ou NULL em caso de falha
+     *
      */
     public function produtosDisponiveis() {
         $baseUrl = $this->getBaseUrl();
 
         $url = sprintf("%s/produtos-disponiveis.json", $baseUrl );
 
-        return $url;
+        $ret = null;
+
+        // --> tenta obter os produtos a partir de uma chamada à API
+        $resultInfo = $this->send($url, 'GET');
+
+        if ( $resultInfo and ($resultInfo['statusCode'] == 200) ) {
+            $ret = json_decode($resultInfo['result'],1);
+        }
+
+        return $ret;
     }
 
 
@@ -120,13 +131,17 @@ class ApiClient {
             );
         }
 
-        $dataEncoded = http_build_query($data);
-
         $curlClient = curl_init();
         curl_setopt($curlClient, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curlClient, CURLOPT_URL, $url);
         curl_setopt($curlClient, CURLOPT_POST, 1); //0 for a get request
-        curl_setopt($curlClient, CURLOPT_POSTFIELDS, $dataEncoded);
+
+
+        if ( $data ) {
+            $dataEncoded = http_build_query($data);
+            curl_setopt($curlClient, CURLOPT_POSTFIELDS, $dataEncoded);
+        }
+
         curl_setopt($curlClient, CURLOPT_CUSTOMREQUEST, $method );
         curl_setopt($curlClient, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curlClient, CURLOPT_HEADER, 0);
@@ -150,18 +165,18 @@ class ApiClient {
      * Get available environments and their configuration
      * @return array
      */
-    protected function getEnvironments() {
+    public static function getEnvironments() {
         return [
             'prod' => [
-                'baseUrl' => 'http://acesso.templum.com.br/',
+                'baseUrl' => 'http://acesso.templum.com.br',
                 'script' => '/'
             ],
             'teste3' => [
-                'baseUrl' => 'http://teste3.templum.com.br/',
+                'baseUrl' => 'http://teste3.templum.com.br',
                 'script' => '/'
             ],
             'dev' => [
-                'baseUrl' => 'http://templum.dev/',
+                'baseUrl' => 'http://templum.dev',
                 'script' => '/app_multi_dev.php'
             ],
         ];
