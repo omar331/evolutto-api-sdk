@@ -1,0 +1,13 @@
+{
+  "name": "Templum Consultoria - Cliente da API",
+  "description": "Breve descrição do que a aplicação se propoe a fazer",
+  "authors": [
+    {
+      "name": "Omar Alves",
+      "email": "omar.alves@templum.com.br"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.8"
+  }
+}
