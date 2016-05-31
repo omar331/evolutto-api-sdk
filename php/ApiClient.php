@@ -1,5 +1,13 @@
 <?php
 
+
+/**
+ * Class ApiClient
+ *
+ * Abstraction for Templum Consultoria API
+ *
+ *
+ */
 class ApiClient {
     /**
      * @var $enviroment
@@ -22,6 +30,7 @@ class ApiClient {
     /**
      * @param $clientId
      * @param $clientSecret
+     *
      * @param string $enviroment
      * @param string $apiVersion
      */
@@ -184,3 +193,5 @@ class ApiClient {
     }
 
 }
+
+

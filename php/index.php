@@ -18,7 +18,7 @@
 ?>
 
 <form method="post">
-    <h3>Acesso a API</h3>
+    <h3>Acesso a API :)</h3>
 
     <p>
         Para interagir com a plataforma através da API, em nome de sua Organização,
