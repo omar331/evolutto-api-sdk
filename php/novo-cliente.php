@@ -13,51 +13,20 @@
     // ---> obtem os produtos disponíveis através da API
     //
     $produtosDisponiveis = $apiClient->produtosDisponiveis();
-
-//    $postData = [
-//        'api_secret' => $aplicacaoTeste->getClientSecret(),
-//        'data' => [
-//            'empresa' => [
-//                'tipo_pessoa' => 'j',
-//                'nome_fantasia' => static::TEST_NOVO_CLIENTE_CONTRATO_CLIENTE_EMPRESA_NOME_FANTASIA,
-//                'razao_social' => static::TEST_NOVO_CLIENTE_CONTRATO_CLIENTE_EMPRESA_RAZAO_SOCIAL,
-//                'cnpj' => static::TEST_NOVO_CLIENTE_CONTRATO_CLIENTE_EMPRESA_CNPJ,
-//            ],
-//            'usuario' => [
-//                'nome' => static::TEST_NOVO_CLIENTE_CONTRATO_USUARIO_NOME,
-//                'email' => static::TEST_NOVO_CLIENTE_CONTRATO_USUARIO_EMAIL,
-//                'telefone1' => static::TEST_NOVO_CLIENTE_CONTRATO_USUARIO_TELEFONE1,
-//                'telefone2' => static::TEST_NOVO_CLIENTE_CONTRATO_USUARIO_TELEFONE2,
-//                'telefone3' => static::TEST_NOVO_CLIENTE_CONTRATO_USUARIO_TELEFONE3,
-//                'senha' => static::TEST_NOVO_CLIENTE_CONTRATO_USUARIO_SENHA,
-//            ],
-//            'contratos' => [
-//                [
-//                    'produto_id' => $produto1Ref->getId(),
-//                    'contrato_inicio' => '2016-01-01',
-//                    'contrato_fim' => '2016-12-31',
-//                    'freemium' => true,
-//                    'ativo_consultoria' => true,
-//                    'ativo_acesso_conteudo' => true,
-//                ],
-//                [
-//                    'produto_id' => $produto2Ref->getId(),
-//                    'contrato_inicio' => '2016-02-25',
-//                    'contrato_fim' => '2016-07-31',
-//                    'freemium' => false,
-//                    'ativo_consultoria' => true,
-//                    'ativo_acesso_conteudo' => true,
-//                ]
-//            ]
-//        ]
-//    ];
 ?>
 
 <?php
-    // ---> tenta criar um novo CLIENTE + USUÁRIO + CONTRATOS
+    /*
+     * Quando o formulário estiver sendo postado,
+     * tenta criar um novo CLIENTE + USUÁRIO + CONTRATOS
+     *
+     */
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $contratoInicio = new \DateTime();
 
+        //
+        // ---> popula informações sobre contratos
+        //
+        $contratoInicio = new \DateTime();
         $contratoTermino = clone $contratoInicio;
         $contratoTermino->add( new \DateInterval('P12M') );
 
@@ -95,12 +64,15 @@
             'contratos' => $contratosCriar
         ];
 
+
+        //
+        //  ---> faz a solicitação de criação para a API
+        //
         $criarResultado = $apiClient->novoCliente( $clienteCriarInfo );
         $resultInfo = json_decode($criarResultado['result'], true);
 
-
+        // ---> exibe os resultados, de forma rudimentar
         echo "<H1>Resultados</H1><br>";
-
         echo "<pre>";
         print_r($resultInfo);
         echo "</pre>";
@@ -155,7 +127,7 @@
             <td>
                 <input type="text" name="nome_fantasia">
             </td>
-        </tr>$apiClient->novoCliente( $clienteCriarInfo
+        </tr>
         <tr>
             <th>
                 Razão Social
