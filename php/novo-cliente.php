@@ -234,6 +234,8 @@
             </th>
             <td>
                 <textarea name="conteudo" cols="40" rows="5"></textarea>
+            </td>
+            <td>
                 <input type="file" name="anexo" id="fileToUpload" />
             </td>
         </tr>

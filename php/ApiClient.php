@@ -187,7 +187,7 @@ class ApiClient {
             ],
             'dev' => [
                 'baseUrl' => 'http://templum.dev',
-                'script' => '/app_multi_dev.php'
+                'script' => '/app_vagrant.php'
             ],
         ];
     }
