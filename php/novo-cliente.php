@@ -39,6 +39,19 @@
                 'freemium' => false,
                 'ativo_consultoria' => true,
                 'ativo_acesso_conteudo' => true,
+                'anotacoes' => [
+                    [
+                        'texto' => $_POST['conteudo'],
+                        // 0 ou mais arquivos por anotacao
+                        'arquivos' => [
+                            [
+                                'nome_original' => basename($_FILES['fileToUpload']['name']),
+                                'conteudo_base_64' => base64_encode(file_get_contents($_POST['anexo']))
+                            ]
+
+                        ]
+                    ]
+                ]
             ];
         }
 
@@ -62,20 +75,6 @@
                 'senha' => $_POST['usuario_senha'],
             ],
             'contratos' => $contratosCriar,
-            'anotacoes' => [
-
-                 [
-                     'texto' => $_POST['conteudo'],
-                     // 0 ou mais arquivos por anotacao
-                     'arquivos' => [
-                         [
-                             'nome_original' => basename($_FILES['fileToUpload']['name']),
-                             'conteudo_base_64' => base64_encode(file_get_contents($_POST['anexo']))
-                         ]
-
-                     ]
-                 ]
-            ]
         ];
 
 
@@ -235,6 +234,8 @@
             <td>
                 <textarea name="conteudo" cols="40" rows="5"></textarea>
             </td>
+        </tr>
+        <tr>
             <td>
                 <input type="file" name="anexo" id="fileToUpload" />
             </td>
