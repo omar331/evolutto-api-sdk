@@ -61,7 +61,21 @@
                 'telefone3' => '99 99999999',
                 'senha' => $_POST['usuario_senha'],
             ],
-            'contratos' => $contratosCriar
+            'contratos' => $contratosCriar,
+            'anotacoes' => [
+
+                 [
+                     'texto' => $_POST['conteudo'],
+                     // 0 ou mais arquivos por anotacao
+                     'arquivos' => [
+                         [
+                             'nome_original' => basename($_FILES['fileToUpload']['name']),
+                             'conteudo_base_64' => base64_encode(file_get_contents($_POST['anexo']))
+                         ]
+
+                     ]
+                 ]
+            ]
         ];
 
 
@@ -207,6 +221,20 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Anotação no contrato</h3>
+
+    <table>
+        <tr>
+            <th>
+
+            </th>
+            <td>
+                <textarea name="conteudo" cols="40" rows="5"></textarea>
+                <input type="file" name="anexo" id="fileToUpload" />
             </td>
         </tr>
     </table>
