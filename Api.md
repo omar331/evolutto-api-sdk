@@ -2,14 +2,13 @@
 
 A plataforma Evolutto está em constante evolução e fornece meios para integração através de sua API.
 
-Novos serviços (endpoints) são criados constantemente, mas seu acesso é controlado primariamente
+Novos serviços (endpoints) são criados constantemente. Seu acesso é controlado primariamente
 através das credenciais de sua organização:
 
 - **{{clientId}}** - obrigatório em todas as requisições. Sempre como parte da URL do endpoint 
 - **{{api_secret}}** - obrigatório na maioria das requisições. Enviado através do corpo de POST ou no HEADER HTTP das requisições.
 
 As credenciais acima são fornecidas pela plataforma Evolutto.
-
 
 
 # Endpoints
