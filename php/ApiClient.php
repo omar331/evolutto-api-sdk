@@ -16,6 +16,7 @@ class ApiClient {
 
 
     /** @var  string $clientId
+     * 
      * ID do cliente obtido a partir das configurações de sua Organização na plataforma
      */
     protected $clientId;
