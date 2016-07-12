@@ -69,11 +69,21 @@ Em caso de **falha (status 401)**:
 
 ### `POST /api/v1/{{clientId}}/novo-cliente.json`
 
-Cria um novo conjunto **CLIENTE + USUARIO + CONTRATO**. 
+Cria um novo conjunto **EMPRESA + USUARIO + CONTRATO**. 
 
 #### Definições gerais
-  TODO: especificar aqui
 
+Os **contratos** de consultoria sempre estão vinculados à uma **empresa (ou pessoa física)**. 
+A plataforma é acessada por **usuários** através de seus dados de acesso (username e senha). 
+Todos os usuários ficam vinculados à **empresa** e ao **contrato**.
+
+Ao fazer uma requisição para criação de um novo **cliente + contrato + usuario**, os dados 
+das entidades a serem criadas ficam envelopados dentro da propriedade **data** do documento JSON.
+
+Observe que os três tipos de entidade mencionados acima (empresa, usuário e contratos) ocorrem como propriedades raizes dentro de **data**.
+ 
+Note também que é possível criar múltiplos contratos para cada cliente. 
+Em cada contrato é possível criar múltiplas anotações e em cada anotação é possível anexar múltiplos arquivos.
 
 
 **Exemplo de requisição HTTP**
@@ -110,14 +120,26 @@ Cache-Control: no-cache
             "contrato_fim":"2016-12-31",
             "freemium":true,
             "ativo_consultoria":true,
-            "ativo_acesso_conteudo":true
+            "ativo_acesso_conteudo":true,
+            "anotacoes": [
+                {
+                    "texto": "Informações gerais do cliente. Profissão: Carteiro   Estado Civil: casado",
+                    "disponivelCliente": false,
+                    "arquivos": [
+                           {
+                                "nome_original": "Dados do cliente.docx",
+                                "conteudo_base_64": "T3MgZGFkb3MgZG8gY2xpZW50ZSBlbSBiYXNlNjQuDQo"
+                           }
+                    ]
+                }
+            ]
          }
       ]
    }
 }
 ```
 
-Em caso de **sucesso (status 200)**. Exemplo:
+Resposta em caso de **sucesso (status 200)**. Exemplo:
 
 ```json
 {
@@ -140,7 +162,7 @@ Em caso de **sucesso (status 200)**. Exemplo:
 ```
 
      
-Em caso de **falha (status 401)**:
+Resposta em caso de **falha (status 401)**:
      
 ```json     
         {
