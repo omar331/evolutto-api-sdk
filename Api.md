@@ -219,7 +219,6 @@ Host: {{ url_base }}
 Content-Type: application/json; charset=utf-8
 Cache-Control: no-cache
 apisecret: {{ apisecret }}
-Cache-Control: no-cache
 
 ```
 
@@ -411,7 +410,7 @@ Resposta em caso de **falha (status 401)**:
      
 ```json     
         {  
-           "message":"Falha ao tentar obter o Contrato - O ID do contrato n\u00e3o existem em nossa base de dados.",
+           "message":"Falha ao tentar obter o Contrato - O ID do contrato n\u00e3o existe em nossa base de dados.",
            "info":{  
               "data":{  
                  "contratoId":"384832222"
