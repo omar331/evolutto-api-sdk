@@ -199,7 +199,7 @@ Resposta em caso de **falha (status 401)**:
 ```
               
         
-### `GET /api/v1/{{clientId}}/contrato.json`
+### `GET /api/v1/{{clientId}}/contrato/{{ contratoId }}.json`
 
 Obtem dados do **CONTRATO** 
 
@@ -214,7 +214,7 @@ tais como: Empresa, Usuarios, Chamados, Diagnostico(Perguntas e Repostas), Event
 O corpo da requisição deve conter as informações codificadas como um documento JSON:
 
 ```
-GET /{{ api_version }}/{{ api_client_id }}/{{ contratoId }}.json HTTP/1.1
+GET /{{ api_version }}/{{ api_client_id }}/contrato/{{ contratoId }}.json HTTP/1.1
 Host: {{ url_base }}
 Content-Type: application/json; charset=utf-8
 Cache-Control: no-cache
