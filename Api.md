@@ -197,5 +197,225 @@ Resposta em caso de **falha (status 401)**:
            }
         }
 ```
+              
         
-        
+### `GET /api/v1/{{clientId}}/contrato.json`
+
+Obtem dados do **CONTRATO** 
+
+#### Definições gerais
+
+Retorna as principais informações relacionadas ao contrato, 
+tais como: Empresa, Usuarios, Chamados, Diagnostico(Perguntas e Repostas), Eventos, Anotacoes, Produto, Etapas do Cronograma.
+
+
+**Exemplo de requisição HTTP**
+
+O corpo da requisição deve conter as informações codificadas como um documento JSON:
+
+```
+GET /{{ api_version }}/{{ api_client_id }}/{{ contratoId }}.json HTTP/1.1
+Host: {{ url_base }}
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-cache
+apisecret: {{ apisecret }}
+Cache-Control: no-cache
+
+```
+
+Resposta em caso de **sucesso (status 200)**. Exemplo:
+
+```json
+{
+  "message": "Dados do contrato obtido com sucesso",
+  {
+     "info":{
+        "contrato":{
+           "id":38483,
+           "data_compra":"2015-06-30T10:31:35-0400",
+           "contrato_data_inicio":"2015-07-01T00:00:00-0400",
+           "contrato_data_expiracao":"2016-08-12T00:00:00-0400",
+           "contrato_encerrado_em":"2016-06-30T00:00:00-0400",
+           "contrato_encerrado_motivo":"expirado",
+           "cronograma_inicio":"2015-07-02T00:00:00-0400",
+           "cronograma_previsao_termino":"2016-03-04T00:00:00-0500",
+           "empresa":{
+              "tipo_pessoa":"j",
+              "fantasia":"Empresa ficticia.",
+              "razao":"Empresa ficticia.",
+              "cnpj":"11.455.455\/0001-55",
+              "telefone":"(00)55669988",
+              "id":26485
+           },
+           "produto":{
+              "id":221,
+              "nome":"SGQv4.0 - SISTEMA DE GEST\u00c3O DA QUALIDADE - ISO9001:2008",
+              "descricao_html":"0",
+              "freemium":false,
+              "disponibilizar_opr":true,
+              "nick":"ISO 9001 v4",
+              "ativo_comercial":false,
+              "ativo_consultor":true,
+              "titulo_simples":"ISO 9001"
+           },
+           "ativo_consultoria":true,
+           "ativo_acesso_conteudo":true,
+           "respostas_diagnostico":[
+              {
+                 "id":51982,
+                 "pergunta":{
+                    "id":828,
+                    "descricao":"Pergunta Exemplo Api",
+                    "ordem_lista":1,
+                    "tipo":1,
+                    "visivel_cliente":true
+                 },
+                 "resposta":"Resposta Exemplo Api"
+              },
+              {
+                 "id":51983,
+                 "pergunta":{
+                    "id":829,
+                    "descricao":"QUANTOS FUNCION\u00c1RIOS TRABALHAM EM SUA EMPRESA? ",
+                    "ordem_lista":2,
+                    "tipo":1,
+                    "visivel_cliente":true
+                 },
+                 "resposta":"21"
+              }
+           ],
+           "cronograma_etapas":[
+              {
+                 "id":214764,
+                 "previsao_inicio":"2015-07-02T00:00:00-0400",
+                 "previsao_termino":"2015-07-07T00:00:00-0400",
+                 "etapa_atual":false,
+                 "iniciado_em":"2015-07-02T10:15:48-0400",
+                 "terminado_em":"2015-07-02T10:43:46-0400"
+              },
+              {
+                 "id":214765,
+                 "previsao_inicio":"2015-07-07T00:00:00-0400",
+                 "previsao_termino":"2015-07-13T00:00:00-0400",
+                 "etapa_atual":false,
+                 "iniciado_em":"2015-07-02T10:43:46-0400",
+                 "terminado_em":"2015-07-16T09:52:03-0400"
+              }
+           ],
+           "usuarios":[
+              {
+                 "representante_direcao":false,
+                 "usuario_conta":{
+                    "id":8982,
+                    "nome":"Usuario Exemplo Api",
+                    "username":"usuarioexemplo@api.com.br",
+                    "telefone1":"(00)44558877"
+                 },
+                 "ativo":true
+              },
+              {
+                 "representante_direcao":true,
+                 "usuario_conta":{
+                    "id":29723,
+                    "nome":"Outro Exemplo Api",
+                    "username":"apiexemplo.test",
+                    "telefone1":"(00)44558877"
+                 },
+                 "ativo":true
+              }
+           ]
+        },
+        "chamados":[
+           {
+              "chamado":{
+                 "id":334369,
+                 "assunto":"Registro de treinamento interno",
+                 "status":"resolvido",
+                 "criado_em":"2015-07-16T09:51:33-0400",
+                 "ultima_interacao_em":"2015-08-06T08:58:32-0400"
+              }
+           },
+           {
+              "chamado":{
+                 "id":334968,
+                 "assunto":"Diagn\u00f3stico sobre a situa\u00e7\u00e3o da organiza\u00e7\u00e3o",
+                 "status":"resolvido",
+                 "criado_em":"2015-07-24T14:45:51-0400",
+                 "ultima_interacao_em":"2015-07-24T15:54:19-0400"
+              }
+           }
+        ],
+        "eventos":[
+           {
+              "evento":{
+                 "id":37658,
+                 "tipo":{
+                    "id":8,
+                    "apelido":"reuni\u00e3o virtual",
+                    "nome":"Reuni\u00e3o Virtual",
+                    "titulo_padrao":"Reuni\u00e3o Virtual",
+                    "descricao_padrao":"Reuni\u00e3o Virtual",
+                    "criado_em":"2014-07-09T10:01:30-0400",
+                    "atualizado_em":"2014-07-09T10:01:30-0400"
+                 },
+                 "titulo":"Reuni\u00e3o Virtual",
+                 "visivel_para_cliente":true,
+                 "agendado_para":"2015-07-01T03:00:00-0400",
+                 "criado_em":"2015-07-02T10:15:47-0400",
+                 "atualizado_em":"2015-07-02T10:15:47-0400"
+              }
+           },
+           {
+              "evento":{
+                 "id":37659,
+                 "tipo":{
+                    "id":6,
+                    "apelido":"visita",
+                    "nome":"Visita",
+                    "titulo_padrao":"Visita T\u00e9cnica",
+                    "descricao_padrao":"Visita T\u00e9cnica",
+                    "criado_em":"2014-07-09T10:01:30-0400",
+                    "atualizado_em":"2014-07-09T10:01:30-0400"
+                 },
+                 "titulo":"Visita T\u00e9cnica",
+                 "visivel_para_cliente":true,
+                 "agendado_para":"2015-07-01T03:00:00-0400",
+                 "criado_em":"2015-07-02T10:15:47-0400",
+                 "atualizado_em":"2015-07-02T10:15:47-0400"
+              }
+           }
+        ],
+        "anotacoes":[
+           {
+              "anotacao":{
+                 "id":60520,
+                 "texto":"Cronograma : 42%\nConforme solicitado pela ApiConsultora, alterei a data da auditoria interna para a data xx-xx-xx.",
+                 "criado_em":"2016-07-12T13:56:54-0400"
+              }
+           },
+           {
+              "anotacao":{
+                 "id":59634,
+                 "texto":"Cronograma : 40%\nenviado anteriormene: bla bla bla",
+                 "criado_em":"2016-06-22T16:54:17-0400"
+              }
+           }
+        ]
+     }
+  }
+}
+```
+
+     
+Resposta em caso de **falha (status 401)**:
+     
+```json     
+        {  
+           "message":"Falha ao tentar obter o Contrato - O ID do contrato n\u00e3o existem em nossa base de dados.",
+           "info":{  
+              "data":{  
+                 "contratoId":"384832222"
+              }
+           }
+        }
+```        
